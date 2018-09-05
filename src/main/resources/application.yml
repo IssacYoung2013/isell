@@ -6,6 +6,8 @@ spring:
     url: jdbc:mysql://192.168.137.128/isell?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
+  jackson:
+    default-property-inclusion: non_null
 server:
   context-path: /isell
 
@@ -16,3 +18,7 @@ server:
 #  file: E:\\var\\log\\tomcat\\sell.log
 #  level:
 #    com.issac.LoggerTest: debug
+
+wechat:
+  mAppId: wx9b3552c085a654a6
+  mAppSecret: ba763a143cde2d96ca304b305bedb8ba

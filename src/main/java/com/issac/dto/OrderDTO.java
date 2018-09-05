@@ -1,8 +1,11 @@
 package com.issac.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.issac.dataobject.OrderDetail;
 import com.issac.enums.OrderStatusEnum;
 import com.issac.enums.PayStatusEnum;
+import com.issac.util.serializer.Date2LongSerializer;
 import lombok.Data;
 
 import javax.persistence.Transient;
@@ -18,6 +21,8 @@ import java.util.List;
  *
  */
 @Data
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
 
     /**
@@ -63,11 +68,13 @@ public class OrderDTO {
     /**
      * 创建时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
 
     /**
      * 更新时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime;
 
     @Transient
