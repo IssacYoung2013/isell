@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://192.168.137.128/isell?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://192.168.140.134/isell?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
   jackson:
@@ -22,3 +22,6 @@ server:
 wechat:
   mAppId: wx9b3552c085a654a6
   mAppSecret: ba763a143cde2d96ca304b305bedb8ba
+  mchId:
+  mchKey:
+  keyPath:/var/weixin_cert/h5.
