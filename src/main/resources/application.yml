@@ -22,6 +22,6 @@ server:
 wechat:
   mAppId: wx9b3552c085a654a6
   mAppSecret: ba763a143cde2d96ca304b305bedb8ba
-  mchId:
-  mchKey:
+  mchId:1481734652
+  mchKey:mingshitang2017shenxgueewangtong
   keyPath:/var/weixin_cert/h5.
