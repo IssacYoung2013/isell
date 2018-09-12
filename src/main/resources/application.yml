@@ -3,13 +3,13 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://192.168.140.134/isell?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://192.168.137.129/isell?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
 server:
-  context-path: /isell
+#  context-path: /isell
 
 #logging:
 #  pattern:
@@ -20,8 +20,11 @@ server:
 #    com.issac.LoggerTest: debug
 
 wechat:
-  mAppId: wx9b3552c085a654a6
-  mAppSecret: ba763a143cde2d96ca304b305bedb8ba
-  mchId:1481734652
-  mchKey:mingshitang2017shenxgueewangtong
-  keyPath:/var/weixin_cert/h5.
+  mAppId: wx3a9dbb0a304689fd
+  mAppSecret: 264819b6f6f85748725ff4bdb6df202b
+#  mAppId: wx9b3552c085a654a6
+#  mAppSecret: ba763a143cde2d96ca304b305bedb8ba
+  mchId: 1481734652
+  mchKey: mingshitang2017shenxgueewangtong
+  keyPath: D:\\weixin_cert\\apiclient_cert.p12
+  notifyUrl: http://isell.natapp1.cc/isell/pay/notify

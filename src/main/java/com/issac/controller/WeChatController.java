@@ -46,7 +46,7 @@ public class WeChatController {
     public String authorize(@RequestParam("returnUrl") String returnUrl) {
         // 1. 配置
         // 2. 调用方法
-        String url = "http://isell.natapp1.cc/isell/wechat/userInfo";
+        String url = "http://www.ewt360.com/isell/wechat/userInfo";
         String redirectUrl = null;
         try {
             redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(returnUrl,"UTF-8"));
@@ -69,6 +69,7 @@ public class WeChatController {
             throw new SellException(ResultEnum.WX_MP_ERRPR.getCode(),e.getError().getErrorMsg());
         }
         String openId = wxMpOAuth2AccessToken.getOpenId();
+        log.info("【微信获取】 openid={}",openId);
 
         return "redirect:" + returnUrl + "?openid=" + openId;
     }
