@@ -36,6 +36,8 @@ public enum ResultEnum {
 
     WX_MP_ERRPR(20,"微信公众账号错误"),
 
+    WX_NOTIFY_MONEY_VEIRY_ERROR(21,"微信支付异步通知校验不通过"),
+
     ;
     private Integer code;
 

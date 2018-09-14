@@ -9,7 +9,7 @@ spring:
   jackson:
     default-property-inclusion: non_null
 server:
-#  context-path: /isell
+  context-path: /isell
 
 #logging:
 #  pattern:
@@ -27,4 +27,4 @@ wechat:
   mchId: 1481734652
   mchKey: mingshitang2017shenxgueewangtong
   keyPath: D:\\weixin_cert\\apiclient_cert.p12
-  notifyUrl: http://isell.natapp1.cc/isell/pay/notify
+  notifyUrl: http://www.ewt360.com/isell/wxpay/notify
