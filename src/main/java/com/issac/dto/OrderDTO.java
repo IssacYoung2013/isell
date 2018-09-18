@@ -1,10 +1,12 @@
 package com.issac.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.issac.dataobject.OrderDetail;
 import com.issac.enums.OrderStatusEnum;
 import com.issac.enums.PayStatusEnum;
+import com.issac.util.EnumUtil;
 import com.issac.util.serializer.Date2LongSerializer;
 import lombok.Data;
 
@@ -14,11 +16,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
  * author:  ywy
  * date:  2018-08-31
  * desc:
- *
  */
 @Data
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
@@ -79,4 +79,15 @@ public class OrderDTO {
 
     @Transient
     private List<OrderDetail> orderDetailList;
+
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum() {
+        return EnumUtil.getByCode(orderStatus, OrderStatusEnum.class);
+    }
+
+    @JsonIgnore
+    public PayStatusEnum getPayStatusEnum() {
+        return EnumUtil.getByCode(payStatus, PayStatusEnum.class);
+
+    }
 }
