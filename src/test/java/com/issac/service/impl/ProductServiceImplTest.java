@@ -18,11 +18,9 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- *
  * author:  ywy
  * date:  2018-08-30
  * desc:
- *
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,20 +32,20 @@ public class ProductServiceImplTest {
     @Test
     public void findOne() {
         ProductInfo productInfo = productService.findOne("123456");
-        Assert.assertEquals("123456",productInfo.getProductId());
+        Assert.assertEquals("123456", productInfo.getProductId());
     }
 
     @Test
     public void findAll() {
-        PageRequest pageRequest = new PageRequest(0,2);
+        PageRequest pageRequest = new PageRequest(0, 2);
         Page<ProductInfo> productInfoList = productService.findAll(pageRequest);
-        Assert.assertNotEquals(0,productInfoList.getTotalElements());
+        Assert.assertNotEquals(0, productInfoList.getTotalElements());
     }
 
     @Test
     public void findUpAll() {
         List<ProductInfo> productInfoList = productService.findUpAll();
-        Assert.assertNotEquals(0,productInfoList.size());
+        Assert.assertNotEquals(0, productInfoList.size());
     }
 
     @Test
@@ -64,5 +62,11 @@ public class ProductServiceImplTest {
 
         ProductInfo result = productService.save(productInfo);
         Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void onSale() {
+        ProductInfo productInfo = productService.offSale("123456");
+        Assert.assertEquals(productInfo.getProductStatusEnum(), ProductStatusEnum.DOWN);
     }
 }

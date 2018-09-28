@@ -9,7 +9,7 @@
 <#--主要内容区域-->
     <div id="page-content-wrapper">
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-md-4 column">
                     <table class="table table-bordered">
