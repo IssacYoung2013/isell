@@ -1,5 +1,6 @@
 package com.issac.controller;
 
+import com.issac.config.ProjectUrlConfig;
 import com.issac.enums.ResultEnum;
 import com.issac.exception.SellException;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,12 @@ public class WeChatController {
     @Autowired
     private WxMpService wxMpService;
 
+    @Autowired
+    private WxMpService wxOpenService;
+
+    @Autowired
+    private ProjectUrlConfig projectUrlConfig;
+
     @GetMapping("/auth")
     public void auth(@RequestParam("code") String code) {
         log.info("进入auth方法");
@@ -46,30 +53,58 @@ public class WeChatController {
     public String authorize(@RequestParam("returnUrl") String returnUrl) {
         // 1. 配置
         // 2. 调用方法
-        String url = "http://www.ewt360.com/isell/wechat/userInfo";
+        String url = projectUrlConfig.getWechatMpAuthorize() + "/isell/wechat/userInfo";
         String redirectUrl = null;
         try {
-            redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(returnUrl,"UTF-8"));
+            redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(returnUrl, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            log.error("【微信网页授权】urlEncoder出错,returnUrl={}",returnUrl);
+            log.error("【微信网页授权】urlEncoder出错,returnUrl={}", returnUrl);
         }
-        log.info("【微信网页授权】获取code，result={}",redirectUrl);
+        log.info("【微信网页授权】获取code，result={}", redirectUrl);
 
         return "redirect:" + redirectUrl;
     }
 
     @GetMapping("/userInfo")
     public String userInfo(@RequestParam("code") String code,
-                         @RequestParam("state") String returnUrl) {
+                           @RequestParam("state") String returnUrl) {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
         try {
             wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
         } catch (WxErrorException e) {
-            log.error("【微信获取accesstoken】code={},e={}",code,e);
-            throw new SellException(ResultEnum.WX_MP_ERRPR.getCode(),e.getError().getErrorMsg());
+            log.error("【微信获取accesstoken】code={},e={}", code, e);
+            throw new SellException(ResultEnum.WX_MP_ERRPR.getCode(), e.getError().getErrorMsg());
         }
         String openId = wxMpOAuth2AccessToken.getOpenId();
-        log.info("【微信获取】 openid={}",openId);
+        log.info("【微信获取】 openid={}", openId);
+
+        return "redirect:" + returnUrl + "?openid=" + openId;
+    }
+
+    @GetMapping("/qrAuthorize")
+    public String qrAuthorize(@RequestParam("returnUrl") String returnUrl) {
+        String url = projectUrlConfig.getWechatOpenAuthorize() +  "/isell/wechat/qrUserInfo";
+        String redirectUrl = null;
+        try {
+            redirectUrl = wxOpenService.buildQrConnectUrl(url, WxConsts.QrConnectScope.SNSAPI_LOGIN, URLEncoder.encode(returnUrl, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            log.error("【微信网页授权】urlEncoder出错,returnUrl={}", returnUrl);
+        }
+        return "redirect:" + redirectUrl;
+    }
+
+    @GetMapping("/qrUserInfo")
+    public String qrUserInfo(@RequestParam("code") String code,
+                           @RequestParam("state") String returnUrl) {
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
+        try {
+            wxMpOAuth2AccessToken = wxOpenService.oauth2getAccessToken(code);
+        } catch (WxErrorException e) {
+            log.error("【微信获取accesstoken】code={},e={}", code, e);
+            throw new SellException(ResultEnum.WX_MP_ERRPR.getCode(), e.getError().getErrorMsg());
+        }
+        String openId = wxMpOAuth2AccessToken.getOpenId();
+        log.info("【微信获取】 openid={}", openId);
 
         return "redirect:" + returnUrl + "?openid=" + openId;
     }
